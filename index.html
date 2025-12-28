@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>НИКОЛАЙ☭NIKOLAS V.1.0</title>
+  <title>VOLATILITY ANALYZER V.1.0</title>
   <style>
     * { 
       box-sizing: border-box;
@@ -69,53 +69,27 @@
     #headerSection{
       text-align:center;
       margin:4px 0;
+      width:100%;
     }
     #headerLogo{
-      height:40px;
-      width:auto;
+      width:100%;
+      height:65px;
       display:block;
       object-fit:contain;
-      margin:0 auto 4px auto;
-      background:#000;
-      padding:6px;
-      border-radius:6px;
-      transition: background 0.3s;
-    }
-    body.day-mode #headerLogo{
-      background:#fff;
-    }
-    
-    #titleRow{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-    .title-flag{
-      font-size:24px;
-    }
-    #titleText{
-      font-size:14px;
-      font-weight:bold;
+      object-position:center;
+      margin:0 auto;
+      transition: opacity 0.3s;
     }
     
     @media (max-width: 768px) {
       #headerLogo{
-        height:30px;
-        padding:4px;
-      }
-      .title-flag{
-        font-size:18px;
-      }
-      #titleText{
-        font-size:11px;
+        height:52px;
       }
     }
 
     #toggleRow{
       display:flex;
-      gap:6px;
+      gap:15px;
       justify-content:center;
       align-items:center;
       margin:4px auto;
@@ -151,6 +125,9 @@
     }
     
     @media (max-width: 768px) {
+      #toggleRow{
+        gap:12px;
+      }
       #graphToggle{
         height:18px;
         font-size:10px;
@@ -251,6 +228,9 @@
       font-weight:bold;
       font-size:9px;
       white-space:nowrap;
+      height:21px;
+      display:flex;
+      align-items:center;
     }
     body.day-mode #time{
       background:#333;
@@ -266,6 +246,9 @@
       font-weight:bold;
       font-size:9px;
       white-space:nowrap;
+      height:21px;
+      display:flex;
+      align-items:center;
     }
 
     #apiInput{
@@ -277,24 +260,46 @@
       padding:3px 6px;
       border-radius:3px;
       font-size:9px;
+      height:21px;
     }
     #apiInput::placeholder{
       color:#cce5ff;
     }
 
-    #saveBtn{
-      background:#fff;
-      color:#000;
-      border:none;
-      padding:3px 8px;
+    #saveGroup{
+      display:flex;
+      align-items:center;
+      gap:3px;
+      padding:0px 5px;
       border-radius:3px;
-      cursor:pointer;
-      font-weight:bold;
-      font-size:9px;
-      white-space:nowrap;
+      outline:2px solid #fff;
+      height:21px;
     }
-    body.day-mode #saveBtn{
+    body.day-mode #saveGroup{
+      outline:2px solid #000;
+    }
+
+    #saveCheckbox{
+      width:13px;
+      height:13px;
+      cursor:pointer;
+      accent-color:#0b57d0;
+      background:#fff;
+      border:2px solid #fff;
+      border-radius:2px;
+      padding:2px;
+    }
+    body.day-mode #saveCheckbox{
+      background:#fff;
       border:2px solid #000;
+    }
+
+    #saveLabel{
+      font-size:8px;
+      font-weight:bold;
+      cursor:pointer;
+      white-space:nowrap;
+      user-select:none;
     }
 
     #price{
@@ -306,21 +311,39 @@
       font-size:10px;
       text-align:center;
       white-space:nowrap;
+      height:21px;
+      display:flex;
+      align-items:center;
     }
     
     @media (max-width: 768px) {
-      #time, #connectBtn, #saveBtn{
+      #time, #connectBtn{
         font-size:8px;
         padding:2px 6px;
+        height:19px;
       }
       #apiInput{
         font-size:8px;
         padding:2px 5px;
         min-width:60px;
+        height:19px;
+      }
+      #saveGroup{
+        gap:2px;
+        padding:0px 4px;
+        height:19px;
+      }
+      #saveCheckbox{
+        width:12px;
+        height:12px;
+      }
+      #saveLabel{
+        font-size:7px;
       }
       #price{
         font-size:9px;
         padding:2px 6px;
+        height:19px;
       }
     }
 
@@ -343,16 +366,23 @@
 
     #chartWatermark{
       position:absolute;
-      left:50%;
+      left:0;
       top:50%;
-      transform:translate(-50%,-50%);
-      width:44%;
-      max-width:150px;
+      transform:translateY(-50%);
+      width:100%;
+      height:65px;
       opacity:0.18;
       pointer-events:none;
       z-index:1;
       object-fit:contain;
+      object-position:center;
       transition: opacity 0.3s;
+    }
+    
+    @media (max-width: 768px) {
+      #chartWatermark{
+        height:52px;
+      }
     }
 
     #xzRowWrap{
@@ -393,7 +423,7 @@
     
     .worm-line{
       position:absolute;
-      height:2px;
+      height:1px;
       border-top:2px solid;
       z-index:5;
     }
@@ -756,12 +786,7 @@
   <div id="mainContainer">
     <div id="leftSection">
       <div id="headerSection">
-        <img id="headerLogo" src="https://raw.githubusercontent.com/Samday68/Mehmed2025/main/IMG_9089.png" alt="logo" onerror="this.style.display='none';" />
-        <div id="titleRow">
-          <span class="title-flag">🇷🇺</span>
-          <span id="titleText">НИКОЛАЙ☭NIKOLAS V.1.0</span>
-          <span class="title-flag">🇷🇺</span>
-        </div>
+        <img id="headerLogo" src="https://raw.githubusercontent.com/Samday68/Foto-raflar/refs/heads/main/D354DBAF-3EC7-4B5F-ABC1-8EF876797DAA.jpeg" alt="logo" onerror="this.style.display='none';" />
       </div>
 
       <div id="toggleRow">
@@ -786,12 +811,15 @@
         <div id="time">GMT 00:00:00</div>
         <button id="connectBtn" onclick="connectAPI()">Connect</button>
         <input type="text" id="apiInput" placeholder="Enter Token_ID:">
-        <button id="saveBtn" onclick="saveScreenshot()">💾 Save</button>
+        <div id="saveGroup">
+          <input type="checkbox" id="saveCheckbox" onchange="toggleSaveToken()">
+          <label id="saveLabel" for="saveCheckbox">Save</label>
+        </div>
         <div id="price">0,00</div>
       </div>
 
       <div id="chartContainer">
-        <img id="chartWatermark" src="https://raw.githubusercontent.com/Samday68/Mehmed2025/main/IMG_9089.png" alt="" onerror="this.style.display='none';" />
+        <img id="chartWatermark" src="https://raw.githubusercontent.com/Samday68/Foto-raflar/refs/heads/main/D354DBAF-3EC7-4B5F-ABC1-8EF876797DAA.jpeg" alt="" onerror="this.style.display='none';" />
         <canvas id="chart"></canvas>
       </div>
 
@@ -869,14 +897,38 @@
     let tradeData = [];
     let contractId = null;
 
-    function updateWatermarkLogo(){
+    function loadSavedToken(){
+      const saved = localStorage.getItem('apiToken');
+      if(saved){
+        document.getElementById('apiInput').value = saved;
+        document.getElementById('saveCheckbox').checked = true;
+      }
+    }
+
+    function toggleSaveToken(){
+      const checkbox = document.getElementById('saveCheckbox');
+      const input = document.getElementById('apiInput');
+      
+      if(checkbox.checked){
+        if(input.value.trim()){
+          localStorage.setItem('apiToken', input.value.trim());
+        }
+      } else {
+        localStorage.removeItem('apiToken');
+      }
+    }
+
+    function updateLogos(){
+      const headerLogo = document.getElementById('headerLogo');
       const watermark = document.getElementById('chartWatermark');
       const isDark = !document.body.classList.contains('day-mode');
       
       if(isDark){
-        watermark.src = 'https://raw.githubusercontent.com/Samday68/Mehmed2025/refs/heads/main/EBAC122C-EE82-4D70-B8AE-73269CC19ECB.png';
+        headerLogo.src = 'https://raw.githubusercontent.com/Samday68/Foto-raflar/refs/heads/main/D354DBAF-3EC7-4B5F-ABC1-8EF876797DAA.jpeg';
+        watermark.src = 'https://raw.githubusercontent.com/Samday68/Foto-raflar/refs/heads/main/D354DBAF-3EC7-4B5F-ABC1-8EF876797DAA.jpeg';
       } else {
-        watermark.src = 'https://raw.githubusercontent.com/Samday68/Mehmed2025/main/IMG_9089.png';
+        headerLogo.src = 'https://raw.githubusercontent.com/Samday68/Foto-raflar/refs/heads/main/B3F65E6D-3FB0-45E3-A46A-7E788A46DEC7.jpeg';
+        watermark.src = 'https://raw.githubusercontent.com/Samday68/Foto-raflar/refs/heads/main/B3F65E6D-3FB0-45E3-A46A-7E788A46DEC7.jpeg';
       }
     }
 
@@ -885,7 +937,7 @@
       const btn = document.getElementById('themeToggle');
       body.classList.toggle('day-mode');
       btn.innerText = body.classList.contains('day-mode') ? '☀️' : '🌙';
-      updateWatermarkLogo();
+      updateLogos();
       updateChartColors();
       chart.update();
       renderXYArea();
@@ -1139,7 +1191,7 @@
     function saveScreenshot(){
       html2canvas(document.body).then(canvas => {
         const link = document.createElement('a');
-        link.download = 'nikolai_' + Date.now() + '.png';
+        link.download = 'analyzer_' + Date.now() + '.png';
         link.href = canvas.toDataURL();
         link.click();
       });
@@ -1194,6 +1246,7 @@
         afterDatasetsDraw(chart){
           const {ctx}=chart;
           const meta=chart.getDatasetMeta(0);
+          const isDark = !document.body.classList.contains('day-mode');
           
           const decs=decimalDigits.slice(-11);
           const colors=numColors.slice(-11);
@@ -1219,15 +1272,15 @@
             const midX = (pt1.x + pt2.x) / 2;
             const midY = (pt1.y + pt2.y) / 2;
             
-            ctx.strokeStyle = '#FF6600';
-            ctx.lineWidth = 2.5;
+            ctx.strokeStyle = isDark ? '#40E0D0' : '#000';
+            ctx.lineWidth = 0.9;
             ctx.beginPath();
             ctx.moveTo(midX - 18, midY);
             ctx.lineTo(midX + 18, midY);
             ctx.stroke();
             
             ctx.font = 'bold 9px sans-serif';
-            ctx.fillStyle = '#FF6600';
+            ctx.fillStyle = isDark ? '#40E0D0' : '#000';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText('VZ', midX, midY - 10);
@@ -1251,12 +1304,12 @@
             if(!arrowColor) continue;
             
             const arrowX = midX + 35;
-            const arrowSize = 9;
-            const stemLength = 18;
+            const arrowSize = 7;
+            const stemLength = 16;
             
             ctx.strokeStyle = arrowColor;
             ctx.fillStyle = arrowColor;
-            ctx.lineWidth = 2.5;
+            ctx.lineWidth = 2;
             
             if(arrowColor === 'blue'){
               ctx.beginPath();
@@ -1305,7 +1358,7 @@
               const wormColor = worms[i];
               if(wormColor==='blue' || wormColor==='red'){
                 ctx.strokeStyle = wormColor;
-                ctx.lineWidth = 3;
+                ctx.lineWidth = 2;
                 ctx.beginPath();
                 ctx.moveTo(pt.x - 5, pt.y - 2);
                 ctx.lineTo(pt.x + 5, pt.y - 2);
@@ -1315,9 +1368,8 @@
           });
           const last = meta.data[meta.data.length-1];
           if(last && last.x!==undefined){
-            const isDark = !document.body.classList.contains('day-mode');
-            ctx.strokeStyle = isDark ? '#fff' : '#000';
-            ctx.lineWidth=1.5;
+            ctx.strokeStyle = isDark ? '#40E0D0' : '#000';
+            ctx.lineWidth=0.5;
             ctx.beginPath();
             ctx.moveTo(chart.scales.x.left, last.y);
             ctx.lineTo(last.x, last.y);
@@ -1469,7 +1521,7 @@
         const shown = (values[i]===10 ? 0 : values[i]);
         ctx.fillText(String(shown),x,y);
       }
-      ctx.strokeStyle='#ff6600';
+      ctx.strokeStyle = isDark ? '#40E0D0' : '#000';
       ctx.lineWidth=2.3;
       function drawVZ(i,j){
         const v1=values[i], v2=values[j];
@@ -1777,7 +1829,8 @@
     updateTime();
     startWS();
     
-    updateWatermarkLogo();
+    loadSavedToken();
+    updateLogos();
     
     window.addEventListener('resize',()=>{
       setTimeout(()=>{
