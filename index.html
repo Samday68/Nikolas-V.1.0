@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>НИКОЛАЙ☭NIKOLAS V.1.0</title>
+  <style>
+    * { 
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    body{
+      font-family:sans-serif;
+      background:#1a1a1a;
+      color:#fff;
+      margin:0;
+      padding:5px;
+      transition: background-color 0.3s, color 0.3s;
+      overflow-x:hidden;
+      overflow-y:auto;
+    }
+
+    body.day-mode{
+      background:#fff;
+      color:#000;
+    }
+
+    #mainContainer{
+      display:flex;
+      gap:8px;
+      max-width:100%;
+      margin:0 auto;
+    }
+
+    #leftSection{
+      flex:1;
+      min-width:280px;
+      max-width:100%;
+    }
+
+    #rightSection{
+      flex:0 0 85px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      position:relative;
+    }
+
+    @media (max-width: 768px) {
+      #mainContainer{
+        gap:5px;
+      }
+      
+      #leftSection{
+        flex:1;
+        min-width:0;
+      }
+      
+      #rightSection{
+        flex:0 0 70px;
+      }
+      
+      body{
+        padding:3px;
+      }
+    }
+
+    #headerSection{
+      text-align:center;
+      margin:4px 0;
+    }
+    #headerLogo{
+      height:40px;
+      width:auto;
+      display:block;
+      object-fit:contain;
+      margin:0 auto 4px auto;
+      background:#000;
+      padding:6px;
+      border-radius:6px;
+      transition: background 0.3s;
+    }
+    body.day-mode #headerLogo{
+      background:#fff;
+    }
+    
+    #titleRow{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .title-flag{
+      font-size:24px;
+    }
+    #titleText{
+      font-size:14px;
+      font-weight:bold;
+    }
+    
+    @media (max-width: 768px) {
+      #headerLogo{
+        height:30px;
+        padding:4px;
+      }
+      .title-flag{
+        font-size:18px;
+      }
+      #titleText{
+        font-size:11px;
+      }
+    }
+
+    #toggleRow{
+      display:flex;
+      gap:6px;
+      justify-content:center;
+      align-items:center;
+      margin:4px auto;
+    }
+
+    #graphToggle{
+      height:20px;
+      font-size:11px;
+      font-weight:900;
+      padding:0 10px;
+      cursor:pointer;
+      border:none;
+      border-radius:5px;
+      background:#d93025;
+      color:#fff;
+    }
+
+    #themeToggle{
+      width:28px;
+      height:28px;
+      border:none;
+      border-radius:50%;
+      background:#333;
+      cursor:pointer;
+      font-size:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition: background 0.3s;
+    }
+    body.day-mode #themeToggle{
+      background:#ffd700;
+    }
+    
+    @media (max-width: 768px) {
+      #graphToggle{
+        height:18px;
+        font-size:10px;
+        padding:0 8px;
+      }
+      #themeToggle{
+        width:24px;
+        height:24px;
+        font-size:12px;
+      }
+    }
+
+    #pairsWrap{
+      width:100%;
+      margin:4px 0;
+      display:flex;
+      align-items:center;
+      gap:4px;
+      flex-wrap:wrap;
+    }
+
+    #pairs{
+      display:flex;
+      gap:3px;
+      flex-wrap:wrap;
+      flex:1;
+    }
+    .pair-btn{
+      padding:8px 10px;
+      border:none;
+      border-radius:5px;
+      background:#555;
+      color:#fff;
+      cursor:pointer;
+      font-size:10px;
+      font-weight:600;
+      flex:1;
+      min-width:70px;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.day-mode .pair-btn{
+      background:#e0e0e0;
+      color:#000;
+    }
+    .pair-btn.active{
+      background:#000;
+      color:#fff;
+    }
+    
+    @media (max-width: 768px) {
+      .pair-btn{
+        padding:6px 8px;
+        font-size:9px;
+        min-width:60px;
+      }
+    }
+
+    #startStopBtn{
+      padding:5px 10px;
+      font-size:10px;
+      font-weight:900;
+      cursor:pointer;
+      border:2px solid #4CAF50;
+      border-radius:15px;
+      background:#4CAF50;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:3px;
+      white-space:nowrap;
+    }
+    #startStopBtn.stopped{
+      background:#d93025;
+      border-color:#d93025;
+    }
+    
+    @media (max-width: 768px) {
+      #startStopBtn{
+        padding:4px 8px;
+        font-size:9px;
+      }
+    }
+
+    #topbar{
+      display:flex;
+      gap:3px;
+      margin:4px 0;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    
+    #time{
+      background:#000;
+      color:#fff;
+      padding:3px 6px;
+      border-radius:3px;
+      font-weight:bold;
+      font-size:9px;
+      white-space:nowrap;
+    }
+    body.day-mode #time{
+      background:#333;
+    }
+
+    #connectBtn{
+      background:#d93025;
+      color:#fff;
+      border:none;
+      padding:3px 8px;
+      border-radius:3px;
+      cursor:pointer;
+      font-weight:bold;
+      font-size:9px;
+      white-space:nowrap;
+    }
+
+    #apiInput{
+      flex:1;
+      min-width:80px;
+      background:#0b57d0;
+      color:#fff;
+      border:none;
+      padding:3px 6px;
+      border-radius:3px;
+      font-size:9px;
+    }
+    #apiInput::placeholder{
+      color:#cce5ff;
+    }
+
+    #saveBtn{
+      background:#fff;
+      color:#000;
+      border:none;
+      padding:3px 8px;
+      border-radius:3px;
+      cursor:pointer;
+      font-weight:bold;
+      font-size:9px;
+      white-space:nowrap;
+    }
+    body.day-mode #saveBtn{
+      border:2px solid #000;
+    }
+
+    #price{
+      background:#0b57d0;
+      color:#fff;
+      padding:3px 8px;
+      border-radius:3px;
+      font-weight:bold;
+      font-size:10px;
+      text-align:center;
+      white-space:nowrap;
+    }
+    
+    @media (max-width: 768px) {
+      #time, #connectBtn, #saveBtn{
+        font-size:8px;
+        padding:2px 6px;
+      }
+      #apiInput{
+        font-size:8px;
+        padding:2px 5px;
+        min-width:60px;
+      }
+      #price{
+        font-size:9px;
+        padding:2px 6px;
+      }
+    }
+
+    #chartContainer{
+      position:relative;
+      width:100%;
+    }
+    #chart{
+      width:100%;
+      height:180px;
+      position:relative;
+      z-index:2;
+    }
+    
+    @media (max-width: 768px) {
+      #chart{
+        height:130px;
+      }
+    }
+
+    #chartWatermark{
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      width:44%;
+      max-width:150px;
+      opacity:0.18;
+      pointer-events:none;
+      z-index:1;
+      object-fit:contain;
+      transition: opacity 0.3s;
+    }
+
+    #xzRowWrap{
+      width:100%;
+      position:relative;
+      margin-top:1px;
+    }
+    #numbersTop{
+      display:flex;
+      flex-wrap:nowrap;
+      justify-content:flex-end;
+      overflow:hidden;
+      width:100%;
+      position:relative;
+      padding:3px 0;
+    }
+    .num-box{
+      flex:0 0 36px;
+      height:22px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      margin:1px;
+      color:#fff;
+      font-size:12px;
+      font-weight:bold;
+      border-radius:3px;
+    }
+    
+    @media (max-width: 768px) {
+      .num-box{
+        flex:0 0 28px;
+        height:18px;
+        font-size:10px;
+        margin:0.5px;
+      }
+    }
+    
+    .worm-line{
+      position:absolute;
+      height:2px;
+      border-top:2px solid;
+      z-index:5;
+    }
+
+    #gridWrap{
+      width:100%;
+      position:relative;
+      margin-top:2px;
+    }
+
+    #gridTopRow, #gridBottomRow{
+      display:flex;
+      flex-wrap:nowrap;
+      justify-content:flex-end;
+      width:100%;
+    }
+
+    .grid-cell{
+      flex:0 0 36px;
+      height:36px;
+      box-sizing:border-box;
+      background:#1a1a1a;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:16px;
+      line-height:1;
+      padding:0;
+      margin:0;
+      border:2px solid #444;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    body.day-mode .grid-cell{
+      background:#fff;
+      border-color:#000;
+    }
+    
+    @media (max-width: 768px) {
+      .grid-cell{
+        flex:0 0 28px;
+        height:28px;
+        font-size:13px;
+        border:1.5px solid #444;
+      }
+      body.day-mode .grid-cell{
+        border:1.5px solid #000;
+      }
+    }
+
+    .grid-top{ border-color:#0b57d0; }
+    .grid-bottom{ border-color:#d93025; }
+
+    #gridDivider{
+      width:100%;
+      display:flex;
+      justify-content:flex-end;
+      margin:0;
+      height:2px;
+      background:transparent;
+    }
+    #gridDividerLine{
+      height:2px;
+      background:#fff;
+      width:0px;
+      transition: background 0.3s;
+    }
+    body.day-mode #gridDividerLine{
+      background:#000;
+    }
+
+    .start-box{
+      position:absolute;
+      border:2px solid #fff;
+      pointer-events:none;
+      z-index:50;
+      box-sizing:border-box;
+      transition: border-color 0.3s;
+    }
+    body.day-mode .start-box{
+      border-color:#000;
+    }
+    .start-label{
+      position:absolute;
+      top:-10px;
+      left:50%;
+      transform:translateX(-50%);
+      background:orange;
+      color:#000;
+      font-size:8px;
+      font-weight:900;
+      padding:0 3px;
+      line-height:10px;
+      border-radius:2px;
+      white-space:nowrap;
+    }
+
+    #analysisBoxes{
+      width:100%;
+      margin-top:2px;
+      position:relative;
+    }
+
+    #xyBox{
+      position:relative;
+      width:100%;
+      height:340px;
+      border-bottom:2px solid #444;
+      transition: border-color 0.3s;
+    }
+    body.day-mode #xyBox{
+      border-bottom-color:#000;
+    }
+    
+    @media (max-width: 768px) {
+      #xyBox{
+        height:250px;
+      }
+    }
+    
+    #xyCanvas{
+      width:100%;
+      height:100%;
+      display:block;
+    }
+
+    #tradingPanel{
+      width:100%;
+      background:#000;
+      border:2px solid #666;
+      border-radius:6px;
+      padding:5px;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      position:absolute;
+      top:150px;
+      right:0;
+    }
+    body.day-mode #tradingPanel{
+      background:#f5f5f5;
+      border-color:#ccc;
+    }
+    
+    @media (max-width: 768px) {
+      #tradingPanel{
+        top:110px;
+        padding:4px;
+        gap:3px;
+        border:1.5px solid #666;
+      }
+      body.day-mode #tradingPanel{
+        border:1.5px solid #ccc;
+      }
+    }
+
+    .panel-row{
+      display:flex;
+      flex-direction:column;
+      gap:1px;
+    }
+    .panel-label{
+      font-size:8px;
+      font-weight:bold;
+    }
+    .panel-value{
+      background:#555;
+      color:#fff;
+      padding:4px;
+      border-radius:4px;
+      text-align:center;
+      font-size:10px;
+      font-weight:bold;
+      border:1.5px solid #666;
+    }
+    body.day-mode .panel-value{
+      background:#fff;
+      color:#000;
+      border-color:#ccc;
+    }
+
+    .panel-input{
+      background:#555;
+      color:#fff;
+      padding:4px;
+      border-radius:4px;
+      text-align:center;
+      font-size:10px;
+      font-weight:bold;
+      border:1.5px solid #666;
+    }
+    body.day-mode .panel-input{
+      background:#fff;
+      color:#000;
+      border-color:#ccc;
+    }
+    
+    @media (max-width: 768px) {
+      .panel-label{
+        font-size:7px;
+      }
+      .panel-value, .panel-input{
+        padding:3px;
+        font-size:8px;
+        border:1px solid #666;
+      }
+      body.day-mode .panel-value, body.day-mode .panel-input{
+        border:1px solid #ccc;
+      }
+    }
+
+    .trade-buttons{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-top:4px;
+    }
+    
+    @media (max-width: 768px) {
+      .trade-buttons{
+        gap:4px;
+        margin-top:2px;
+      }
+    }
+
+    .metal-btn{
+      width:100%;
+      height:42px;
+      border-radius:50%;
+      position:relative;
+      border:none;
+      cursor:pointer;
+      background:radial-gradient(circle at 30% 30%, #ffffff, #bdbdbd 35%, #8f8f8f 55%, #f5f5f5 75%, #9b9b9b 100%);
+      box-shadow:
+        inset 0 2px 5px rgba(255,255,255,.9),
+        inset 0 -5px 8px rgba(0,0,0,.7),
+        0 8px 15px rgba(0,0,0,.9);
+    }
+    
+    @media (max-width: 768px) {
+      .metal-btn{
+        height:32px;
+        box-shadow:
+          inset 0 2px 4px rgba(255,255,255,.9),
+          inset 0 -4px 6px rgba(0,0,0,.7),
+          0 6px 10px rgba(0,0,0,.9);
+      }
+    }
+
+    .metal-btn::before{
+      content:"";
+      position:absolute;
+      inset:5px;
+      border-radius:50%;
+      background:linear-gradient(to bottom, var(--light) 0%, var(--mid) 48%, var(--dark) 100%);
+    }
+    
+    @media (max-width: 768px) {
+      .metal-btn::before{
+        inset:4px;
+      }
+    }
+
+    .metal-btn::after{
+      content:"";
+      position:absolute;
+      inset:7px;
+      border-radius:50%;
+      background:linear-gradient(to bottom, rgba(255,255,255,.45) 0%, rgba(255,255,255,.35) 35%, rgba(255,255,255,0) 36%);
+      pointer-events:none;
+    }
+    
+    @media (max-width: 768px) {
+      .metal-btn::after{
+        inset:5px;
+      }
+    }
+
+    .up{
+      --light:#aebcff;
+      --mid:#1e3dff;
+      --dark:#0c1f7a;
+    }
+
+    .down{
+      --light:#ffb8b8;
+      --mid:#c61f1f;
+      --dark:#6b0000;
+    }
+
+    .metal-btn:active{
+      transform:translateY(2px);
+      box-shadow:
+        inset 0 5px 10px rgba(0,0,0,.8),
+        0 5px 8px rgba(0,0,0,.8);
+    }
+
+    .balance-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:2px;
+    }
+    .balance-label{
+      font-size:8px;
+      font-weight:bold;
+    }
+    .balance-value{
+      color:#4CAF50;
+      font-size:8px;
+      font-weight:bold;
+    }
+    
+    @media (max-width: 768px) {
+      .balance-row{
+        margin-top:1px;
+      }
+      .balance-label, .balance-value{
+        font-size:7px;
+      }
+    }
+
+    #tradeChart{
+      width:100%;
+      height:85px;
+      background:#1a1a1a;
+      border:2px solid #666;
+      border-radius:6px;
+      margin-top:5px;
+      position:absolute;
+      top:410px;
+      right:0;
+      display:none;
+    }
+    body.day-mode #tradeChart{
+      background:#f5f5f5;
+      border-color:#ccc;
+    }
+    
+    @media (max-width: 768px) {
+      #tradeChart{
+        height:70px;
+        top:310px;
+        border:1.5px solid #666;
+        margin-top:4px;
+      }
+      body.day-mode #tradeChart{
+        border:1.5px solid #ccc;
+      }
+    }
+    
+    #tradeCanvas{
+      width:100%;
+      height:100%;
+      display:block;
+    }
+  </style>
+</head>
+<body>
+  <div id="mainContainer">
+    <div id="leftSection">
+      <div id="headerSection">
+        <img id="headerLogo" src="https://raw.githubusercontent.com/Samday68/Mehmed2025/main/IMG_9089.png" alt="logo" onerror="this.style.display='none';" />
+        <div id="titleRow">
+          <span class="title-flag">🇷🇺</span>
+          <span id="titleText">НИКОЛАЙ☭NIKOLAS V.1.0</span>
+          <span class="title-flag">🇷🇺</span>
+        </div>
+      </div>
+
+      <div id="toggleRow">
+        <button id="graphToggle" onclick="toggleGraph()">XZ</button>
+        <button id="themeToggle" onclick="toggleTheme()">🌙</button>
+      </div>
+
+      <div id="pairsWrap">
+        <div id="pairs">
+          <button class="pair-btn active" onclick="selectPair(this,'R_100')">Volatility 100</button>
+          <button class="pair-btn" onclick="selectPair(this,'R_75')">Volatility 75</button>
+          <button class="pair-btn" onclick="selectPair(this,'R_50')">Volatility 50</button>
+          <button class="pair-btn" onclick="selectPair(this,'R_25')">Volatility 25</button>
+        </div>
+        <button id="startStopBtn" onclick="toggleStartStop()">
+          <span>⏻</span>
+          <span id="startStopText">START</span>
+        </button>
+      </div>
+
+      <div id="topbar">
+        <div id="time">GMT 00:00:00</div>
+        <button id="connectBtn" onclick="connectAPI()">Connect</button>
+        <input type="text" id="apiInput" placeholder="Enter Token_ID:">
+        <button id="saveBtn" onclick="saveScreenshot()">💾 Save</button>
+        <div id="price">0,00</div>
+      </div>
+
+      <div id="chartContainer">
+        <img id="chartWatermark" src="https://raw.githubusercontent.com/Samday68/Mehmed2025/main/IMG_9089.png" alt="" onerror="this.style.display='none';" />
+        <canvas id="chart"></canvas>
+      </div>
+
+      <div id="xzRowWrap">
+        <div id="numbersTop"></div>
+      </div>
+
+      <div id="gridWrap">
+        <div id="gridTopRow"></div>
+        <div id="gridDivider"><div id="gridDividerLine"></div></div>
+        <div id="gridBottomRow"></div>
+      </div>
+
+      <div id="analysisBoxes">
+        <div id="xyBox">
+          <canvas id="xyCanvas"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div id="rightSection">
+      <div id="tradingPanel">
+        <div class="panel-row">
+          <div class="panel-label">Duration:</div>
+          <div class="panel-value">5</div>
+        </div>
+        
+        <div class="panel-row">
+          <div class="panel-label">STAKE:</div>
+          <input type="number" class="panel-input" id="stakeInput" value="1" min="0.35" step="0.01">
+        </div>
+        
+        <div class="trade-buttons">
+          <button class="metal-btn up" onclick="placeTrade('CALL')"></button>
+          <button class="metal-btn down" onclick="placeTrade('PUT')"></button>
+        </div>
+        
+        <div class="balance-row">
+          <span class="balance-label">Balance:</span>
+          <span class="balance-value" id="balanceValue">$ 0.00</span>
+        </div>
+        <div class="balance-row">
+          <span class="balance-label">Profit:</span>
+          <span class="balance-value" id="profitValue">$ 0.00</span>
+        </div>
+      </div>
+
+      <div id="tradeChart">
+        <canvas id="tradeCanvas"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    let ws;
+    let derivWS;
+    let apiToken = '';
+    let isRunning = true;
+    let prices=[], digits=[], decimalDigits=[], combinedDigits=[];
+    let wormLinesTop=[];
+    let numColors=[];
+    let currentPair='R_100', currentGraph='XZ';
+    let gridHistory = [];
+    let startCooldown = 0;
+    let xzTickCounter = 0;
+    let startGlobalSpan = null;
+
+    let tradeActive = false;
+    let tradeType = '';
+    let entrySpot = 0;
+    let exitSpot = 0;
+    let barrier = 0;
+    let tradeData = [];
+    let contractId = null;
+
+    function updateWatermarkLogo(){
+      const watermark = document.getElementById('chartWatermark');
+      const isDark = !document.body.classList.contains('day-mode');
+      
+      if(isDark){
+        watermark.src = 'https://raw.githubusercontent.com/Samday68/Mehmed2025/refs/heads/main/EBAC122C-EE82-4D70-B8AE-73269CC19ECB.png';
+      } else {
+        watermark.src = 'https://raw.githubusercontent.com/Samday68/Mehmed2025/main/IMG_9089.png';
+      }
+    }
+
+    function toggleTheme(){
+      const body = document.body;
+      const btn = document.getElementById('themeToggle');
+      body.classList.toggle('day-mode');
+      btn.innerText = body.classList.contains('day-mode') ? '☀️' : '🌙';
+      updateWatermarkLogo();
+      updateChartColors();
+      chart.update();
+      renderXYArea();
+      if(tradeActive) drawTradeChart();
+    }
+
+    function toggleStartStop(){
+      isRunning = !isRunning;
+      const btn = document.getElementById('startStopBtn');
+      const text = document.getElementById('startStopText');
+      
+      if(isRunning){
+        btn.classList.remove('stopped');
+        text.innerText = 'START';
+        startWS();
+      }else{
+        btn.classList.add('stopped');
+        text.innerText = 'STOP';
+        if(ws) ws.close();
+      }
+    }
+
+    function connectAPI(){
+      apiToken = document.getElementById('apiInput').value.trim();
+      if(!apiToken){
+        alert('Lütfen geçerli bir API token girin!');
+        return;
+      }
+      
+      derivWS = new WebSocket('wss://ws.binaryws.com/websockets/v3?app_id=1089');
+      
+      derivWS.onopen = () => {
+        derivWS.send(JSON.stringify({ authorize: apiToken }));
+      };
+      
+      derivWS.onmessage = (msg) => {
+        const data = JSON.parse(msg.data);
+        
+        if(data.authorize){
+          alert('API Bağlantısı Başarılı!');
+          if(data.authorize.balance){
+            document.getElementById('balanceValue').innerText = '$ ' + parseFloat(data.authorize.balance).toFixed(2);
+          }
+          derivWS.send(JSON.stringify({ balance: 1, subscribe: 1 }));
+        }
+        
+        if(data.balance){
+          document.getElementById('balanceValue').innerText = '$ ' + parseFloat(data.balance.balance).toFixed(2);
+        }
+
+        if(data.proposal_open_contract){
+          const contract = data.proposal_open_contract;
+          
+          if(tradeActive && contract.tick_stream){
+            const ticks = contract.tick_stream;
+            
+            if(tradeData.length === 0 && ticks.length > 0){
+              entrySpot = parseFloat(ticks[0].tick);
+              barrier = parseFloat(contract.barrier || entrySpot);
+              tradeData = [entrySpot];
+              document.getElementById('tradeChart').style.display = 'block';
+            }
+            
+            if(ticks.length > tradeData.length && tradeData.length < 6){
+              for(let i = tradeData.length; i < Math.min(ticks.length, 6); i++){
+                tradeData.push(parseFloat(ticks[i].tick));
+              }
+              drawTradeChart();
+            }
+          }
+          
+          if(contract.status === 'won' || contract.status === 'lost'){
+            if(contract.exit_tick){
+              exitSpot = parseFloat(contract.exit_tick);
+            }
+            const profit = parseFloat(contract.profit || 0);
+            document.getElementById('profitValue').innerText = (profit >= 0 ? '$ +' : '$ ') + profit.toFixed(2);
+            drawTradeChart();
+          }
+        }
+        
+        if(data.error){
+          alert('API Hatası: ' + data.error.message);
+        }
+      };
+    }
+
+    function placeTrade(type){
+      if(!apiToken || !derivWS || derivWS.readyState !== WebSocket.OPEN){
+        alert('Önce API bağlantısı yapın!');
+        return;
+      }
+      
+      const stake = parseFloat(document.getElementById('stakeInput').value);
+      
+      if(!stake || stake < 0.35){
+        alert('Minimum stake 0.35 USD olmalı!');
+        return;
+      }
+      
+      const proposal = {
+        proposal: 1,
+        amount: stake,
+        basis: 'stake',
+        contract_type: type,
+        currency: 'USD',
+        duration: 5,
+        duration_unit: 't',
+        symbol: currentPair
+      };
+      
+      derivWS.send(JSON.stringify(proposal));
+      
+      const proposalListener = (msg) => {
+        const data = JSON.parse(msg.data);
+        if(data.proposal){
+          const proposalId = data.proposal.id;
+          derivWS.send(JSON.stringify({ buy: proposalId, price: stake }));
+        }
+        if(data.buy){
+          contractId = data.buy.contract_id;
+          tradeActive = true;
+          tradeType = type;
+          entrySpot = 0;
+          exitSpot = 0;
+          barrier = 0;
+          tradeData = [];
+          
+          derivWS.send(JSON.stringify({ proposal_open_contract: 1, contract_id: contractId, subscribe: 1 }));
+        }
+      };
+      
+      derivWS.addEventListener('message', proposalListener);
+    }
+
+    function drawTradeChart(){
+      const canvas = document.getElementById('tradeCanvas');
+      if(!canvas || tradeData.length === 0) return;
+      
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      
+      const ctx = canvas.getContext('2d');
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, rect.width, rect.height);
+      
+      const isDark = !document.body.classList.contains('day-mode');
+      const width = rect.width;
+      const height = rect.height;
+      const padding = 12;
+      
+      const allValues = [...tradeData, barrier];
+      const minVal = Math.min(...allValues);
+      const maxVal = Math.max(...allValues);
+      const range = maxVal - minVal || 0.001;
+      const marginPercent = 0.1;
+      const adjustedMin = minVal - (range * marginPercent);
+      const adjustedMax = maxVal + (range * marginPercent);
+      const adjustedRange = adjustedMax - adjustedMin;
+      
+      function getY(val){
+        return height - padding - ((val - adjustedMin) / adjustedRange) * (height - 2 * padding);
+      }
+      
+      if(tradeData.length > 0){
+        ctx.strokeStyle = '#FF8C00';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([4, 2]);
+        ctx.beginPath();
+        ctx.moveTo(padding, padding);
+        ctx.lineTo(padding, height - padding);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        
+        ctx.font = '7px sans-serif';
+        ctx.fillStyle = '#FF8C00';
+        ctx.textAlign = 'center';
+        ctx.fillText('Entry', padding, padding - 2);
+      }
+      
+      if(barrier > 0){
+        const barrierY = getY(barrier);
+        ctx.strokeStyle = isDark ? '#fff' : '#000';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(padding, barrierY);
+        ctx.lineTo(width - padding, barrierY);
+        ctx.stroke();
+        
+        ctx.font = '7px sans-serif';
+        ctx.fillStyle = isDark ? '#fff' : '#000';
+        ctx.textAlign = 'left';
+        ctx.fillText('Barrier', padding + 2, barrierY - 3);
+      }
+      
+      if(tradeData.length > 0){
+        const stepX = (width - 2 * padding) / 5;
+        
+        ctx.strokeStyle = '#6B8CAE';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        
+        tradeData.forEach((val, i) => {
+          const x = padding + (i * stepX);
+          const y = getY(val);
+          
+          if(i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+        
+        tradeData.forEach((val, i) => {
+          if(i < 1) return;
+          
+          const x = padding + (i * stepX);
+          const y = getY(val);
+          
+          ctx.fillStyle = '#6B8CAE';
+          ctx.beginPath();
+          ctx.arc(x, y, 3, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        
+        if(tradeData.length === 6){
+          const exitX = padding + (5 * stepX);
+          ctx.strokeStyle = '#FF8C00';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([4, 2]);
+          ctx.beginPath();
+          ctx.moveTo(exitX, padding);
+          ctx.lineTo(exitX, height - padding);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          
+          ctx.font = '7px sans-serif';
+          ctx.fillStyle = '#FF8C00';
+          ctx.textAlign = 'center';
+          ctx.fillText('Exit', exitX, padding - 2);
+        }
+      }
+      
+      if(tradeData.length === 6 && exitSpot > 0){
+        const won = (tradeType === 'CALL' && exitSpot > barrier) || (tradeType === 'PUT' && exitSpot < barrier);
+        ctx.fillStyle = won ? 'rgba(76, 175, 80, 0.15)' : 'rgba(244, 67, 54, 0.15)';
+        ctx.fillRect(0, 0, width, height);
+      }
+    }
+
+    function saveScreenshot(){
+      html2canvas(document.body).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'nikolai_' + Date.now() + '.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+
+    function toggleGraph(){
+      if(currentGraph==='XZ') currentGraph='ZZ';
+      else if(currentGraph==='ZZ') currentGraph='Z.Z';
+      else currentGraph='XZ';
+      document.getElementById('graphToggle').innerText=currentGraph;
+      chart.update();
+      renderXYArea();
+      renderTwoRowGrid();
+      renderStartOverlay();
+    }
+
+    function updateChartColors(){
+      const isDark = !document.body.classList.contains('day-mode');
+      chart.data.datasets[0].borderColor = isDark ? '#fff' : '#000';
+      chart.data.datasets[0].backgroundColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
+      chart.options.scales.y.grid = { color: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' };
+      chart.options.scales.x.grid = { color: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' };
+      chart.options.scales.y.ticks = { color: isDark ? '#fff' : '#000' };
+      chart.options.scales.x.ticks = { color: isDark ? '#fff' : '#000' };
+    }
+
+    const ctx=document.getElementById('chart').getContext('2d');
+    const chart=new Chart(ctx,{
+      type:'line',
+      data:{
+        labels:Array.from({length:11},(_,i)=>(i+1).toString()),
+        datasets:[{
+          data:Array(11).fill(null),
+          borderColor:'#fff',
+          borderWidth:1.5,
+          backgroundColor:'rgba(255,255,255,0.05)',
+          pointBackgroundColor:Array(11).fill('#fff'),
+          pointRadius:2,
+          pointHoverRadius:3
+        }]
+      },
+      options:{
+        plugins:{legend:{display:false},tooltip:{enabled:false}},
+        scales:{
+          y:{ beginAtZero:false, grid:{color:'rgba(255,255,255,0.1)'}, ticks:{color:'#fff'} },
+          x:{ grid:{color:'rgba(255,255,255,0.1)'}, ticks:{color:'#fff'} }
+        },
+        animation:false,
+        maintainAspectRatio:false
+      },
+      plugins:[{
+        afterDatasetsDraw(chart){
+          const {ctx}=chart;
+          const meta=chart.getDatasetMeta(0);
+          
+          const decs=decimalDigits.slice(-11);
+          const colors=numColors.slice(-11);
+          
+          const values = decs.map(d => {
+            let v = parseInt((d || '0'), 10);
+            if(Number.isNaN(v)) v = 0;
+            return v;
+          });
+          
+          for(let i = 0; i < values.length - 1; i++){
+            const v1 = values[i];
+            const v2 = values[i+1];
+            const c1 = colors[i];
+            const c2 = colors[i+1];
+            
+            if(Math.abs(v1 - v2) !== 1) continue;
+            
+            const pt1 = meta.data[i];
+            const pt2 = meta.data[i+1];
+            if(!pt1 || !pt2) continue;
+            
+            const midX = (pt1.x + pt2.x) / 2;
+            const midY = (pt1.y + pt2.y) / 2;
+            
+            ctx.strokeStyle = '#FF6600';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(midX - 18, midY);
+            ctx.lineTo(midX + 18, midY);
+            ctx.stroke();
+            
+            ctx.font = 'bold 9px sans-serif';
+            ctx.fillStyle = '#FF6600';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('VZ', midX, midY - 10);
+            
+            let arrowColor = '';
+            
+            if(c1 === c2){
+              if(c1 === 'blue'){
+                arrowColor = v2 > v1 ? 'blue' : 'red';
+              } else if(c1 === 'red'){
+                arrowColor = v2 < v1 ? 'blue' : 'red';
+              }
+            } else {
+              if(c1 === 'blue' && c2 === 'red'){
+                arrowColor = v1 < v2 ? 'red' : 'blue';
+              } else if(c1 === 'red' && c2 === 'blue'){
+                arrowColor = v2 > v1 ? 'blue' : 'red';
+              }
+            }
+            
+            if(!arrowColor) continue;
+            
+            const arrowX = midX + 35;
+            const arrowSize = 9;
+            const stemLength = 18;
+            
+            ctx.strokeStyle = arrowColor;
+            ctx.fillStyle = arrowColor;
+            ctx.lineWidth = 2.5;
+            
+            if(arrowColor === 'blue'){
+              ctx.beginPath();
+              ctx.moveTo(arrowX - stemLength * 0.707, midY + stemLength * 0.707);
+              ctx.lineTo(arrowX, midY);
+              ctx.stroke();
+              
+              ctx.beginPath();
+              ctx.moveTo(arrowX, midY);
+              ctx.lineTo(arrowX - arrowSize, midY);
+              ctx.lineTo(arrowX, midY + arrowSize);
+              ctx.closePath();
+              ctx.fill();
+            } else {
+              ctx.beginPath();
+              ctx.moveTo(arrowX - stemLength * 0.707, midY - stemLength * 0.707);
+              ctx.lineTo(arrowX, midY);
+              ctx.stroke();
+              
+              ctx.beginPath();
+              ctx.moveTo(arrowX, midY);
+              ctx.lineTo(arrowX - arrowSize, midY);
+              ctx.lineTo(arrowX, midY - arrowSize);
+              ctx.closePath();
+              ctx.fill();
+            }
+          }
+          
+          ctx.font='900 15px sans-serif';
+          ctx.textAlign='center';
+          ctx.textBaseline='bottom';
+          const digs=digits.slice(-11);
+          const combs=combinedDigits.slice(-11);
+          const worms=wormLinesTop.slice(-11);
+          
+          meta.data.forEach((pt,i)=>{
+            let t='';
+            if(currentGraph==='XZ') t=decs[i]||'';
+            else if(currentGraph==='ZZ') t=digs[i]||'';
+            else t=(combs[i]||'').replace(',', '.');
+            if(pt && pt.x!==undefined){
+              let fillColor = colors[i] || '#000';
+              if(fillColor === 'blue') fillColor = '#6A9FFF';
+              ctx.fillStyle = fillColor;
+              ctx.fillText(t, pt.x, pt.y - 2);
+              const wormColor = worms[i];
+              if(wormColor==='blue' || wormColor==='red'){
+                ctx.strokeStyle = wormColor;
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(pt.x - 5, pt.y - 2);
+                ctx.lineTo(pt.x + 5, pt.y - 2);
+                ctx.stroke();
+              }
+            }
+          });
+          const last = meta.data[meta.data.length-1];
+          if(last && last.x!==undefined){
+            const isDark = !document.body.classList.contains('day-mode');
+            ctx.strokeStyle = isDark ? '#fff' : '#000';
+            ctx.lineWidth=1.5;
+            ctx.beginPath();
+            ctx.moveTo(chart.scales.x.left, last.y);
+            ctx.lineTo(last.x, last.y);
+            ctx.stroke();
+          }
+        }
+      }]
+    });
+
+    function selectPair(el,pair){
+      currentPair=pair;
+      document.querySelectorAll('.pair-btn').forEach(b=>b.classList.remove('active'));
+      el.classList.add('active');
+      if(ws) ws.close();
+      prices=[];digits=[];decimalDigits=[];combinedDigits=[];
+      wormLinesTop=[];numColors=[];
+      document.getElementById('numbersTop').innerHTML='';
+      gridHistory=[];
+      startCooldown=0;
+      startGlobalSpan=null;
+      xzTickCounter=0;
+      renderTwoRowGrid();
+      renderStartOverlay();
+      renderXYArea();
+      if(isRunning) startWS();
+    }
+
+    function updateWorm(){
+      if(prices.length<20) return;
+      const last20=prices.slice(-20);
+      const max=Math.max(...last20.slice(0,-1));
+      const min=Math.min(...last20.slice(0,-1));
+      const last=last20[last20.length-1];
+      let color='lightgreen';
+      if(last>max) color='blue';
+      else if(last<min) color='red';
+      wormLinesTop.push(color);
+      if(wormLinesTop.length>20) wormLinesTop.shift();
+    }
+
+    function renderWormLines(containerId,wormArray){
+      const c=document.getElementById(containerId);
+      c.querySelectorAll('.worm-line').forEach(e=>e.remove());
+      const boxes=c.querySelectorAll('.num-box');
+      boxes.forEach((box,idx)=>{
+        if(!wormArray[idx]) return;
+        const line=document.createElement('div');
+        line.className='worm-line';
+        line.style.width=box.offsetWidth+'px';
+        line.style.left=box.offsetLeft+'px';
+        line.style.top=(box.offsetTop+box.offsetHeight+0.2)+'px';
+        line.style.borderTopColor=wormArray[idx];
+        c.appendChild(line);
+      });
+    }
+
+    function renderXYArea(){
+      const canvas=document.getElementById('xyCanvas');
+      if(!canvas) return;
+      const box=document.getElementById('xyBox');
+      const rect=box.getBoundingClientRect();
+      const dpr=window.devicePixelRatio||1;
+      canvas.width=rect.width*dpr;
+      canvas.height=rect.height*dpr;
+      const ctx=canvas.getContext('2d');
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      ctx.clearRect(0,0,rect.width,rect.height);
+      if(currentGraph!=='XZ') return;
+      const vis=Math.min(11,decimalDigits.length);
+      if(vis<2) return;
+      const decSlice=decimalDigits.slice(-vis);
+      const colorSlice=numColors.slice(-vis);
+      const isDark = !document.body.classList.contains('day-mode');
+      const values=decSlice.map(d=>{
+        let v=parseInt((d||'0'),10);
+        if(Number.isNaN(v)) v=0;
+        if(v===0) v=10;
+        return v;
+      });
+      const width=rect.width;
+      const height=rect.height;
+      const marginX=32;
+      const marginTop=14;
+      const marginBottom=24;
+      const stepX=(width-2*marginX)/(vis-1);
+      const xs=[];
+      for(let i=0;i<vis;i++) xs.push(marginX+i*stepX);
+      const baseY=height/2;
+      const maxAmp=(height/2)-marginTop-marginBottom;
+      const unitY=maxAmp/10;
+      function pointY(idx){
+        const v=values[idx];
+        const col=colorSlice[idx];
+        if(col==='blue') return baseY - v*unitY;
+        if(col==='red') return baseY + v*unitY;
+        return baseY;
+      }
+      ctx.strokeStyle = isDark ? '#fff' : '#000';
+      ctx.lineWidth=2.0;
+      ctx.beginPath();
+      ctx.moveTo(marginX-10,baseY);
+      ctx.lineTo(width-marginX+10,baseY);
+      ctx.stroke();
+      const splitIndex=vis-6;
+      const splitX=xs[splitIndex] - stepX*0.15;
+      ctx.lineWidth=2.0;
+      ctx.strokeStyle='#0b57d0';
+      ctx.beginPath();
+      ctx.moveTo(splitX,marginTop-6);
+      ctx.lineTo(splitX,baseY);
+      ctx.stroke();
+      ctx.strokeStyle='#d93025';
+      ctx.beginPath();
+      ctx.moveTo(splitX,baseY);
+      ctx.lineTo(splitX,height-marginBottom+12);
+      ctx.stroke();
+      ctx.font='10px sans-serif';
+      ctx.textAlign='right';
+      ctx.textBaseline='middle';
+      for(let v=1;v<=10;v++){
+        const yUp=baseY - v*unitY;
+        const yDn=baseY + v*unitY;
+        if(yUp>marginTop-4){
+          ctx.fillStyle='#0b57d0';
+          ctx.fillText(String(v),marginX-16,yUp);
+        }
+        if(yDn<height-marginBottom+6){
+          ctx.fillStyle='#d93025';
+          ctx.fillText(String(v),marginX-16,yDn);
+        }
+      }
+      ctx.strokeStyle='#777';
+      ctx.lineWidth=2.0;
+      const startIdx=vis-6;
+      ctx.beginPath();
+      for(let i=startIdx;i<vis;i++){
+        const x=xs[i], y=pointY(i);
+        if(i===startIdx) ctx.moveTo(x,y);
+        else ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      ctx.font='bold 15px sans-serif';
+      for(let i=0;i<vis;i++){
+        const x=xs[i], y=pointY(i);
+        const col=colorSlice[i];
+        ctx.fillStyle=(col==='blue'?'#0b57d0':(col==='red'?'#d93025':'#666'));
+        const shown = (values[i]===10 ? 0 : values[i]);
+        ctx.fillText(String(shown),x,y);
+      }
+      ctx.strokeStyle='#ff6600';
+      ctx.lineWidth=2.3;
+      function drawVZ(i,j){
+        const v1=values[i], v2=values[j];
+        const c1=colorSlice[i], c2=colorSlice[j];
+        if(c1!==c2) return;
+        if(c1!=='blue' && c1!=='red') return;
+        if(Math.abs(v1-v2)!==1) return;
+        const x1=xs[i], x2=xs[j];
+        const y1=pointY(i), y2=pointY(j);
+        const yMid=(y1+y2)/2;
+        const extra = 10;
+        ctx.beginPath();
+        ctx.moveTo(x1 - extra, yMid);
+        ctx.lineTo(x2 + extra, yMid);
+        ctx.stroke();
+      }
+      for(let i=0;i<vis-1;i++) drawVZ(i,i+1);
+      const winStart=Math.max(0,vis-6);
+      for(let i=winStart;i<vis;i++){
+        for(let j=i+2;j<vis;j++) drawVZ(i,j);
+      }
+      const lastLocal=vis-1;
+      const lastVal=values[lastLocal];
+      const lastCol=colorSlice[lastLocal];
+      const pairs=[];
+      for(let k=1;k<=5;k++){
+        const i=lastLocal-k;
+        if(i<0) break;
+        const prevCol=colorSlice[i];
+        if(Math.abs(lastVal-values[i])===1 && lastCol!==prevCol && lastCol!=='#666' && prevCol!=='#666'){
+          pairs.push(i);
+        }
+      }
+      if(pairs.length>0){
+        ctx.strokeStyle = isDark ? '#fff' : '#000';
+        ctx.lineWidth=2;
+        const radius=10;
+        const xL=xs[lastLocal], yL=pointY(lastLocal);
+        ctx.beginPath();
+        ctx.arc(xL,yL,radius,0,Math.PI*2);
+        ctx.stroke();
+        pairs.forEach(i=>{
+          const x=xs[i], y=pointY(i);
+          ctx.beginPath();
+          ctx.arc(x,y,radius,0,Math.PI*2);
+          ctx.stroke();
+        });
+        ctx.font='bold 16px sans-serif';
+        ctx.textAlign='center';
+        ctx.textBaseline='middle';
+        let shownLast = (values[lastLocal]===10 ? 0 : values[lastLocal]);
+        ctx.fillStyle=(lastCol==='blue'?'#0b57d0':(lastCol==='red'?'#d93025':'#666'));
+        ctx.fillText(String(shownLast), xL, yL);
+        pairs.forEach(i=>{
+          const x=xs[i], y=pointY(i);
+          const col=colorSlice[i];
+          const shown = (values[i]===10 ? 0 : values[i]);
+          ctx.fillStyle=(col==='blue'?'#0b57d0':(col==='red'?'#d93025':'#666'));
+          ctx.fillText(String(shown), x, y);
+        });
+      }
+    }
+
+    function isEven(n){ return (n % 2) === 0; }
+
+    function decideRow(prev, currV, effColor){
+      if(!prev) return (effColor === 'blue') ? 'top' : 'bottom';
+      if(currV === prev.v && effColor === prev.effColor) return prev.row;
+      if(prev.effColor !== effColor) return (effColor === 'blue') ? 'top' : 'bottom';
+      if(effColor === 'blue') return (currV > prev.v) ? 'top' : 'bottom';
+      else return (currV < prev.v) ? 'top' : 'bottom';
+    }
+
+    function updateGridFromLast11(){
+      if(currentGraph !== 'XZ'){
+        gridHistory = [];
+        startGlobalSpan = null;
+        startCooldown = 0;
+        renderTwoRowGrid();
+        renderStartOverlay();
+        return;
+      }
+      const vis = Math.min(11, decimalDigits.length);
+      if(vis <= 0){
+        gridHistory = [];
+        renderTwoRowGrid();
+        renderStartOverlay();
+        return;
+      }
+      const decSlice = decimalDigits.slice(-vis).map(x=>{
+        let v = parseInt((x ?? '0'),10);
+        if(Number.isNaN(v)) v=0;
+        return v;
+      });
+      const colSlice = numColors.slice(-vis);
+      const newHist = [];
+      for(let i=0;i<vis;i++){
+        const raw = colSlice[i] || '#666';
+        const rawColor = (raw==='blue' || raw==='red') ? raw : '#666';
+        const prev = newHist.length ? newHist[newHist.length-1] : null;
+        let effColor = rawColor;
+        if(effColor !== 'blue' && effColor !== 'red'){
+          effColor = prev ? prev.effColor : 'blue';
+        }
+        const row = decideRow(prev, decSlice[i], effColor);
+        newHist.push({ v: decSlice[i], rawColor, effColor, row });
+      }
+      gridHistory = newHist;
+      if(startCooldown > 0) startCooldown--;
+      detectStartGlobal();
+      renderTwoRowGrid();
+      renderStartOverlay();
+      setTimeout(renderStartOverlay, 0);
+    }
+
+    function detectStartGlobal(){
+      if(currentGraph !== 'XZ') return;
+      if(startCooldown > 0) return;
+      if(gridHistory.length < 3) return;
+      const vis = gridHistory.length;
+      const firstGlobal = xzTickCounter - vis;
+      const n = vis;
+      const a = gridHistory[n-3].v;
+      const b = gridHistory[n-2].v;
+      const c = gridHistory[n-1].v;
+      const cond1 = isEven(a) && isEven(b) && !isEven(c);
+      const cond2 = !isEven(a) && !isEven(b) && isEven(c);
+      if(cond1 || cond2){
+        startGlobalSpan = { from: firstGlobal + (n-3), to: firstGlobal + (n-1) };
+        startCooldown = 6;
+      }
+    }
+
+    function renderTwoRowGrid(){
+      const topRow = document.getElementById('gridTopRow');
+      const botRow = document.getElementById('gridBottomRow');
+      const dividerLine = document.getElementById('gridDividerLine');
+      if(!topRow || !botRow || !dividerLine) return;
+      topRow.innerHTML='';
+      botRow.innerHTML='';
+      const vis = gridHistory.length;
+      if(vis === 0){
+        dividerLine.style.width = '0px';
+        return;
+      }
+      for(let i=0;i<vis;i++){
+        const item = gridHistory[i];
+        const cellTop = document.createElement('div');
+        cellTop.className = 'grid-cell grid-top';
+        const cellBot = document.createElement('div');
+        cellBot.className = 'grid-cell grid-bottom';
+        const showColor = (item.rawColor==='blue' || item.rawColor==='red') ? item.rawColor : item.effColor;
+        if(item.row === 'top'){
+          cellTop.style.color = showColor;
+          cellTop.textContent = String(item.v);
+          cellBot.textContent = '';
+        }else{
+          cellBot.style.color = showColor;
+          cellBot.textContent = String(item.v);
+          cellTop.textContent = '';
+        }
+        topRow.appendChild(cellTop);
+        botRow.appendChild(cellBot);
+      }
+      const firstCell = topRow.querySelector('.grid-cell');
+      const cellW = firstCell ? firstCell.getBoundingClientRect().width : 36;
+      dividerLine.style.width = (vis * cellW) + 'px';
+    }
+
+    function renderStartOverlay(){
+      document.querySelectorAll('.start-box').forEach(e=>e.remove());
+      if(!startGlobalSpan) return;
+      if(currentGraph !== 'XZ') return;
+      const wrap = document.getElementById('gridWrap');
+      const topRow = document.getElementById('gridTopRow');
+      const botRow = document.getElementById('gridBottomRow');
+      if(!wrap || !topRow || !botRow) return;
+      const topCells = topRow.querySelectorAll('.grid-cell');
+      const botCells = botRow.querySelectorAll('.grid-cell');
+      const vis = topCells.length;
+      if(vis === 0) return;
+      const firstGlobal = xzTickCounter - vis;
+      const fromLocal = startGlobalSpan.from - firstGlobal;
+      const toLocal = startGlobalSpan.to - firstGlobal;
+      if(fromLocal < 0 || toLocal >= vis) return;
+      const c1 = topCells[fromLocal];
+      const c2 = topCells[toLocal];
+      const b1 = botCells[fromLocal];
+      const b2 = botCells[toLocal];
+      if(!c1 || !c2 || !b1 || !b2) return;
+      const rWrap = wrap.getBoundingClientRect();
+      const r1 = c1.getBoundingClientRect();
+      const r2 = c2.getBoundingClientRect();
+      const rb1 = b1.getBoundingClientRect();
+      const rb2 = b2.getBoundingClientRect();
+      const left = Math.min(r1.left, rb1.left) - rWrap.left;
+      const right = Math.max(r2.right, rb2.right) - rWrap.left;
+      const top = Math.min(r1.top, rb1.top) - rWrap.top;
+      const bottom = Math.max(r2.bottom, rb2.bottom) - rWrap.top;
+      const box = document.createElement('div');
+      box.className = 'start-box';
+      box.style.left = (left - 2) + 'px';
+      box.style.top = (top - 2) + 'px';
+      box.style.width = (right - left + 4) + 'px';
+      box.style.height = (bottom - top + 4) + 'px';
+      const label = document.createElement('div');
+      label.className = 'start-label';
+      label.textContent = 'start';
+      box.appendChild(label);
+      wrap.appendChild(box);
+    }
+
+    function startWS(){
+      ws=new WebSocket('wss://ws.binaryws.com/websockets/v3?app_id=1089');
+      ws.onopen=()=>{
+        ws.send(JSON.stringify({ ticks_history:currentPair, end:"latest", count:20, subscribe:1 }));
+      };
+      ws.onmessage=(msg)=>{
+        const d=JSON.parse(msg.data);
+        if(d.history){
+          d.history.prices.forEach(p=>{
+            const price=parseFloat(p);
+            prices.push(price);
+            const lastTwo=Math.floor(price).toString().slice(-2);
+            digits.push(lastTwo);
+            const priceStr=price.toString();
+            const dec=(priceStr.split('.')[1]||'0');
+            decimalDigits.push(dec.slice(-1));
+            xzTickCounter++;
+            const lastInt=Math.floor(price).toString().slice(-1);
+            const firstDec=dec.charAt(0)||'0';
+            combinedDigits.push(lastInt+','+firstDec);
+            updateWorm();
+          });
+        }
+        if(d.tick){
+          const price=parseFloat(d.tick.quote);
+          prices.push(price); if(prices.length>20) prices.shift();
+          const lastTwo=Math.floor(price).toString().slice(-2);
+          digits.push(lastTwo); if(digits.length>20) digits.shift();
+          const priceStr=d.tick.quote.toString();
+          const dec=(priceStr.split('.')[1]||'0');
+          decimalDigits.push(dec.slice(-1)); if(decimalDigits.length>20) decimalDigits.shift();
+          xzTickCounter++;
+          const lastInt=Math.floor(price).toString().slice(-1);
+          const firstDec=dec.charAt(0)||'0';
+          combinedDigits.push(lastInt+','+firstDec);
+          if(combinedDigits.length>20) combinedDigits.shift();
+          updateWorm();
+          const priceEl=document.getElementById('price');
+          priceEl.innerText=price.toFixed(2).replace('.',',');
+          if(prices.length>1){
+            const prev=prices[prices.length-2];
+            if(price>prev) priceEl.style.background='blue';
+            else if(price<prev) priceEl.style.background='red';
+            else priceEl.style.background='#0b57d0';
+          }
+        }
+        const row=document.getElementById('numbersTop');
+        row.innerHTML='';
+        numColors=[];
+        let activeArr=(currentGraph==='XZ' ? decimalDigits : (currentGraph==='ZZ'?digits:combinedDigits));
+        const sliceArr=activeArr.slice(-11);
+        for(let i=0;i<sliceArr.length;i++){
+          const globalIndex=activeArr.length-11+i;
+          const up = globalIndex>0 && prices[globalIndex]>prices[globalIndex-1];
+          const down= globalIndex>0 && prices[globalIndex]<prices[globalIndex-1];
+          const color=up?'blue':(down?'red':'#666');
+          numColors.push(color);
+          const box=document.createElement('div');
+          box.className='num-box';
+          box.style.background=color;
+          box.innerText=(currentGraph==='Z.Z') ? (sliceArr[i]||'').replace(',', '.') : (sliceArr[i]||'0');
+          row.appendChild(box);
+        }
+        
+        const last11=prices.slice(-11);
+        chart.data.datasets[0].data=last11;
+        chart.data.datasets[0].pointBackgroundColor=last11.map((p,i)=>{
+          if(i===0) return 'gray';
+          if(p>last11[i-1]) return 'blue';
+          if(p<last11[i-1]) return 'red';
+          return 'gray';
+        });
+        chart.data.datasets[0].pointBorderColor=Array(last11.length).fill('transparent');
+        chart.data.labels=Array.from({length:last11.length},(_,i)=>(i+1).toString());
+        chart.update();
+        updateGridFromLast11();
+        setTimeout(()=>{
+          renderWormLines('numbersTop',wormLinesTop.slice(-11));
+          renderXYArea();
+          renderStartOverlay();
+        },40);
+      };
+    }
+
+    function updateTime(){
+      const now=new Date();
+      const hh=now.getUTCHours().toString().padStart(2,'0');
+      const mm=now.getUTCMinutes().toString().padStart(2,'0');
+      const ss=now.getUTCSeconds().toString().padStart(2,'0');
+      document.getElementById('time').innerText=`GMT ${hh}:${mm}:${ss}`;
+    }
+    setInterval(updateTime,1000);
+    updateTime();
+    startWS();
+    
+    updateWatermarkLogo();
+    
+    window.addEventListener('resize',()=>{
+      setTimeout(()=>{
+        renderXYArea();
+        renderStartOverlay();
+        renderTwoRowGrid();
+      },100);
+    });
+  </script>
+</body>
+</html>
