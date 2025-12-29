@@ -146,26 +146,26 @@
       display:flex;
       align-items:center;
       gap:4px;
-      flex-wrap:wrap;
+      flex-wrap:nowrap;
     }
 
     #pairs{
       display:flex;
-      gap:3px;
-      flex-wrap:wrap;
+      gap:2px;
+      flex-wrap:nowrap;
       flex:1;
     }
     .pair-btn{
-      padding:8px 10px;
+      padding:6px 3px;
       border:none;
       border-radius:5px;
       background:#555;
       color:#fff;
       cursor:pointer;
-      font-size:10px;
+      font-size:8.5px;
       font-weight:600;
       flex:1;
-      min-width:70px;
+      min-width:45px;
       transition: background 0.3s, color 0.3s;
     }
     body.day-mode .pair-btn{
@@ -179,9 +179,9 @@
     
     @media (max-width: 768px) {
       .pair-btn{
-        padding:6px 8px;
-        font-size:9px;
-        min-width:60px;
+        padding:5px 2px;
+        font-size:7.5px;
+        min-width:38px;
       }
     }
 
@@ -199,6 +199,7 @@
       justify-content:center;
       gap:3px;
       white-space:nowrap;
+      flex-shrink:0;
     }
     #startStopBtn.stopped{
       background:#d93025;
@@ -550,6 +551,97 @@
       display:block;
     }
 
+    #trendAngleBox{
+      width:100%;
+      height:70px;
+      background:#1a1a1a;
+      border:2px solid #444;
+      border-radius:6px;
+      position:absolute;
+      top:0;
+      right:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    body.day-mode #trendAngleBox{
+      background:#f5f5f5;
+      border-color:#ccc;
+    }
+    @media (max-width: 768px) {
+      #trendAngleBox{
+        height:55px;
+      }
+    }
+    #trendAngleCanvas{
+      width:100%;
+      height:100%;
+    }
+
+    #trendBellBox{
+      width:100%;
+      height:70px;
+      background:#666;
+      border:2px solid #444;
+      border-radius:6px;
+      position:absolute;
+      top:76px;
+      right:0;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    #trendBellBox.trend-up{
+      background:#0066ff;
+      border-color:#0044cc;
+    }
+    #trendBellBox.trend-down{
+      background:#cc0000;
+      border-color:#990000;
+    }
+    body.day-mode #trendBellBox{
+      background:#e0e0e0;
+      border-color:#ccc;
+    }
+    body.day-mode #trendBellBox.trend-up{
+      background:#0066ff;
+      border-color:#0044cc;
+    }
+    body.day-mode #trendBellBox.trend-down{
+      background:#cc0000;
+      border-color:#990000;
+    }
+    @media (max-width: 768px) {
+      #trendBellBox{
+        height:55px;
+        top:61px;
+      }
+    }
+    #trendBellIcon{
+      font-size:24px;
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+    }
+    @media (max-width: 768px) {
+      #trendBellIcon{
+        font-size:20px;
+      }
+    }
+    #trendLabel{
+      font-size:10px;
+      font-weight:900;
+      color:#fff;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+    @media (max-width: 768px) {
+      #trendLabel{
+        font-size:9px;
+      }
+    }
+
     #tradingPanel{
       width:100%;
       background:#000;
@@ -560,7 +652,7 @@
       flex-direction:column;
       gap:4px;
       position:absolute;
-      top:150px;
+      top:152px;
       right:0;
     }
     body.day-mode #tradingPanel{
@@ -570,7 +662,7 @@
     
     @media (max-width: 768px) {
       #tradingPanel{
-        top:110px;
+        top:122px;
         padding:4px;
         gap:3px;
         border:1.5px solid #666;
@@ -754,7 +846,7 @@
       border-radius:6px;
       margin-top:5px;
       position:absolute;
-      top:410px;
+      top:412px;
       right:0;
       display:none;
     }
@@ -766,7 +858,7 @@
     @media (max-width: 768px) {
       #tradeChart{
         height:70px;
-        top:310px;
+        top:312px;
         border:1.5px solid #666;
         margin-top:4px;
       }
@@ -796,10 +888,13 @@
 
       <div id="pairsWrap">
         <div id="pairs">
-          <button class="pair-btn active" onclick="selectPair(this,'R_100')">Volatility 100</button>
-          <button class="pair-btn" onclick="selectPair(this,'R_75')">Volatility 75</button>
-          <button class="pair-btn" onclick="selectPair(this,'R_50')">Volatility 50</button>
-          <button class="pair-btn" onclick="selectPair(this,'R_25')">Volatility 25</button>
+          <button class="pair-btn active" onclick="selectPair(this,'R_100')">100</button>
+          <button class="pair-btn" onclick="selectPair(this,'R_75')">75</button>
+          <button class="pair-btn" onclick="selectPair(this,'R_50')">50</button>
+          <button class="pair-btn" onclick="selectPair(this,'R_25')">25</button>
+          <button class="pair-btn" onclick="selectPair(this,'R_10')">10</button>
+          <button class="pair-btn" onclick="selectPair(this,'RDBEAR')">BEAR</button>
+          <button class="pair-btn" onclick="selectPair(this,'RDBULL')">BULL</button>
         </div>
         <button id="startStopBtn" onclick="toggleStartStop()">
           <span>⏻</span>
@@ -815,7 +910,7 @@
           <input type="checkbox" id="saveCheckbox" onchange="toggleSaveToken()">
           <label id="saveLabel" for="saveCheckbox">Save</label>
         </div>
-        <div id="price">0,00</div>
+        <div id="price">0.00</div>
       </div>
 
       <div id="chartContainer">
@@ -841,6 +936,15 @@
     </div>
 
     <div id="rightSection">
+      <div id="trendAngleBox">
+        <canvas id="trendAngleCanvas"></canvas>
+      </div>
+
+      <div id="trendBellBox">
+        <span id="trendBellIcon">🔔</span>
+        <span id="trendLabel">Trend</span>
+      </div>
+
       <div id="tradingPanel">
         <div class="panel-row">
           <div class="panel-label">Duration:</div>
@@ -876,6 +980,13 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
+    // ========== TREND SİSTEMİ DEĞİŞKENLERİ ==========
+    let audioContext = null;
+    let lastTrendSignal = null;
+    let currentTrendData = { direction: null, last3: [], colors: [] };
+    let trendStartGlobal = null; // YENİ: Her START'ta sıfırlanacak
+
+    // ========== MEVCUT DEĞİŞKENLER ==========
     let ws;
     let derivWS;
     let apiToken = '';
@@ -897,6 +1008,305 @@
     let tradeData = [];
     let contractId = null;
 
+    // ========== YENİ: DAHA GÜZEL VE YUMUŞAK SES FONKSİYONLARI ==========
+    function initAudio() {
+      if (!audioContext) {
+        try {
+          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        } catch(e) {
+          console.log('Audio init error:', e);
+        }
+      }
+      if (audioContext && audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
+      return audioContext;
+    }
+
+    // YENİ: Yükseliş - Daha yumuşak ve hoş melodi
+    function playUpTrendSound() {
+      const ctx = initAudio();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+      
+      // Yumuşak yükselen arpej: C-E-G-C (majör akor)
+      const notes = [
+        {freq: 261.63, start: 0, duration: 0.3},    // C4
+        {freq: 329.63, start: 0.25, duration: 0.3}, // E4
+        {freq: 392.00, start: 0.5, duration: 0.3},  // G4
+        {freq: 523.25, start: 0.75, duration: 0.5}  // C5
+      ];
+      
+      notes.forEach(note => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        
+        osc.type = 'sine'; // Yumuşak sinüs dalgası
+        osc.frequency.value = note.freq;
+        
+        const startTime = now + note.start;
+        gain.gain.setValueAtTime(0, startTime);
+        gain.gain.linearRampToValueAtTime(0.12, startTime + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.01, startTime + note.duration);
+        
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(startTime);
+        osc.stop(startTime + note.duration);
+      });
+    }
+
+    // YENİ: Düşüş - Daha yumuşak ve hoş melodi
+    function playDownTrendSound() {
+      const ctx = initAudio();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+      
+      // Yumuşak alçalan arpej: G-E-C-A (minör hissiyat)
+      const notes = [
+        {freq: 392.00, start: 0, duration: 0.3},    // G4
+        {freq: 329.63, start: 0.25, duration: 0.3}, // E4
+        {freq: 261.63, start: 0.5, duration: 0.3},  // C4
+        {freq: 220.00, start: 0.75, duration: 0.5}  // A3
+      ];
+      
+      notes.forEach(note => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        
+        osc.type = 'sine'; // Yumuşak sinüs dalgası
+        osc.frequency.value = note.freq;
+        
+        const startTime = now + note.start;
+        gain.gain.setValueAtTime(0, startTime);
+        gain.gain.linearRampToValueAtTime(0.12, startTime + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.01, startTime + note.duration);
+        
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(startTime);
+        osc.stop(startTime + note.duration);
+      });
+    }
+
+    // ========== GÜNCELLENMIŞ: TREND ANALİZ (SADECE START SONRASI) ==========
+    function analyzeTrend() {
+      if (currentGraph !== 'XZ') return null;
+      if (!startGlobalSpan) return null; // START yoksa trend yok
+      if (!trendStartGlobal) return null; // Trend başlangıcı yoksa
+      if (gridHistory.length < 6) return null;
+
+      const vis = gridHistory.length;
+      const firstGlobal = xzTickCounter - vis;
+      
+      // START noktasından itibaren tikleri al
+      const startFrom = startGlobalSpan.to - firstGlobal + 1;
+      
+      if (startFrom < 0 || startFrom >= vis - 2) return null;
+
+      const afterStart = [];
+      for (let i = startFrom; i < vis; i++) {
+        afterStart.push({
+          v: gridHistory[i].v,
+          row: gridHistory[i].row,
+          color: gridHistory[i].effColor
+        });
+      }
+
+      if (afterStart.length < 3) return null;
+
+      // Son 3 tiki al
+      const last3 = afterStart.slice(-3);
+      const v1 = last3[0].v, v2 = last3[1].v, v3 = last3[2].v;
+      const c1 = last3[0].color, c2 = last3[1].color, c3 = last3[2].color;
+
+      currentTrendData.last3 = [v1, v2, v3];
+      currentTrendData.colors = [c1, c2, c3];
+
+      // Trend belirleme mantığı
+      let trendDirection = null;
+      
+      const compare12 = v2 > v1 ? 'up' : (v2 < v1 ? 'down' : 'flat');
+      const compare23 = v3 > v2 ? 'up' : (v3 < v2 ? 'down' : 'flat');
+      const compare13 = v3 > v1 ? 'up' : (v3 < v1 ? 'down' : 'flat');
+
+      if (compare12 === 'up' && compare23 === 'up' && compare13 === 'up') {
+        trendDirection = 'UP';
+      } else if (compare12 === 'down' && compare23 === 'down' && compare13 === 'down') {
+        trendDirection = 'DOWN';
+      } else if (compare12 === 'down' && compare23 === 'up') {
+        if (v3 > v1 || v3 >= v2) trendDirection = 'UP';
+      } else if (compare12 === 'up' && compare23 === 'down') {
+        if (v3 < v1 || v3 <= v2) trendDirection = 'DOWN';
+      } else {
+        const blueCount = [c1, c2, c3].filter(c => c === 'blue').length;
+        const redCount = [c1, c2, c3].filter(c => c === 'red').length;
+        
+        if (blueCount >= 2 && compare13 === 'up') trendDirection = 'UP';
+        else if (redCount >= 2 && compare13 === 'down') trendDirection = 'DOWN';
+      }
+
+      return trendDirection;
+    }
+
+    function showTrendSignal(direction) {
+      const box = document.getElementById('trendBellBox');
+      const label = document.getElementById('trendLabel');
+      
+      box.classList.remove('trend-up', 'trend-down');
+      
+      if (direction === 'UP') {
+        box.classList.add('trend-up');
+        label.textContent = 'Trend ↑';
+        if (lastTrendSignal !== 'UP') {
+          playUpTrendSound();
+          lastTrendSignal = 'UP';
+        }
+      } else if (direction === 'DOWN') {
+        box.classList.add('trend-down');
+        label.textContent = 'Trend ↓';
+        if (lastTrendSignal !== 'DOWN') {
+          playDownTrendSound();
+          lastTrendSignal = 'DOWN';
+        }
+      } else {
+        label.textContent = 'Trend';
+        lastTrendSignal = null;
+      }
+    }
+
+    // ========== GÜNCELLENMIŞ: V ŞEKLİNDE AÇI ÇİZİMİ + VZ ÇİZGİSİ ==========
+    function drawTrendAngle() {
+      const canvas = document.getElementById('trendAngleCanvas');
+      if (!canvas) return;
+      
+      const box = document.getElementById('trendAngleBox');
+      const rect = box.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      
+      const ctx = canvas.getContext('2d');
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, rect.width, rect.height);
+      
+      const isDark = !document.body.classList.contains('day-mode');
+      const width = rect.width;
+      const height = rect.height;
+
+      // TURUNCU VZ ÇİZGİSİ (Yatay)
+      const vzY = height * 0.45;
+      ctx.strokeStyle = '#FF9900';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(5, vzY);
+      ctx.lineTo(width - 5, vzY);
+      ctx.stroke();
+
+      if (currentTrendData.last3.length >= 3) {
+        const data = currentTrendData.last3;
+        const colors = currentTrendData.colors || [];
+        
+        // 3 nokta: Sol, Orta (en alt), Sağ - V şekli
+        const x1 = width * 0.2;   // Sol nokta
+        const x2 = width * 0.5;   // Orta nokta (V'nin dibi)
+        const x3 = width * 0.8;   // Sağ nokta
+        
+        // Y pozisyonları - V şeklinde (orta en aşağıda)
+        const topY = height * 0.25;
+        const bottomY = height * 0.7;
+        
+        // Orta nokta en aşağıda, soldan sağa yükseliş
+        const y1 = topY + (data[0] * 3);      // Sol nokta
+        const y2 = bottomY;                    // Orta nokta (en alt - V'nin dibi)
+        const y3 = topY + ((9 - data[2]) * 3); // Sağ nokta
+        
+        // İNCE V ÇİZGİLERİ
+        ctx.strokeStyle = isDark ? '#fff' : '#000';
+        ctx.lineWidth = 1.5; // İnce çizgi
+        ctx.lineCap = 'round';
+        
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.lineTo(x3, y3);
+        ctx.stroke();
+        
+        // Noktalar (büyük)
+        [{x: x1, y: y1}, {x: x2, y: y2}, {x: x3, y: y3}].forEach((p, i) => {
+          // Dış çember (siyah/beyaz)
+          ctx.fillStyle = isDark ? '#000' : '#fff';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 8, 0, Math.PI * 2);
+          ctx.fill();
+          
+          // Kenar çizgisi
+          ctx.strokeStyle = isDark ? '#fff' : '#000';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          
+          // İçerideki değer
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillStyle = colors[i] === 'blue' ? '#0066ff' : '#cc0000';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(String(data[i]), p.x, p.y);
+        });
+        
+        // Yön okları
+        const arrowSize = 5;
+        
+        // Sol ok (1. → 2.)
+        const dir1 = y2 > y1 ? 1 : -1; // Aşağı mı yukarı mı
+        ctx.strokeStyle = dir1 > 0 ? '#ff0000' : '#0066ff';
+        ctx.fillStyle = ctx.strokeStyle;
+        ctx.lineWidth = 1.5;
+        
+        const midX1 = (x1 + x2) / 2 - 5;
+        const midY1 = (y1 + y2) / 2;
+        
+        ctx.beginPath();
+        ctx.moveTo(midX1, midY1 - 8 * dir1);
+        ctx.lineTo(midX1, midY1 + 8 * dir1);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(midX1 - arrowSize, midY1 + 4 * dir1);
+        ctx.lineTo(midX1, midY1 + 10 * dir1);
+        ctx.lineTo(midX1 + arrowSize, midY1 + 4 * dir1);
+        ctx.fill();
+        
+        // Sağ ok (2. → 3.)
+        const dir2 = y3 < y2 ? -1 : 1; // Yukarı mı aşağı mı
+        ctx.strokeStyle = dir2 < 0 ? '#0066ff' : '#ff0000';
+        ctx.fillStyle = ctx.strokeStyle;
+        
+        const midX2 = (x2 + x3) / 2 + 5;
+        const midY2 = (y2 + y3) / 2;
+        
+        ctx.beginPath();
+        ctx.moveTo(midX2, midY2 - 8 * dir2);
+        ctx.lineTo(midX2, midY2 + 8 * dir2);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(midX2 - arrowSize, midY2 + 4 * dir2);
+        ctx.lineTo(midX2, midY2 + 10 * dir2);
+        ctx.lineTo(midX2 + arrowSize, midY2 + 4 * dir2);
+        ctx.fill();
+      }
+    }
+
+    function checkAndSignalTrend() {
+      const trend = analyzeTrend();
+      if (trend) {
+        showTrendSignal(trend);
+      }
+      drawTrendAngle();
+    }
+
+    // ========== MEVCUT FONKSİYONLAR ==========
     function loadSavedToken(){
       const saved = localStorage.getItem('apiToken');
       if(saved){
@@ -941,6 +1351,7 @@
       updateChartColors();
       chart.update();
       renderXYArea();
+      drawTrendAngle();
       if(tradeActive) drawTradeChart();
     }
 
@@ -1031,10 +1442,12 @@
         return;
       }
       
-      const stake = parseFloat(document.getElementById('stakeInput').value);
+      const stakeInput = document.getElementById('stakeInput');
+      const stake = parseFloat(stakeInput.value);
       
-      if(!stake || stake < 0.35){
+      if(isNaN(stake) || stake < 0.35){
         alert('Minimum stake 0.35 USD olmalı!');
+        stakeInput.value = '1';
         return;
       }
       
@@ -1051,12 +1464,14 @@
       
       derivWS.send(JSON.stringify(proposal));
       
-      const proposalListener = (msg) => {
+      const handleProposal = (msg) => {
         const data = JSON.parse(msg.data);
+        
         if(data.proposal){
           const proposalId = data.proposal.id;
           derivWS.send(JSON.stringify({ buy: proposalId, price: stake }));
         }
+        
         if(data.buy){
           contractId = data.buy.contract_id;
           tradeActive = true;
@@ -1067,10 +1482,16 @@
           tradeData = [];
           
           derivWS.send(JSON.stringify({ proposal_open_contract: 1, contract_id: contractId, subscribe: 1 }));
+          derivWS.removeEventListener('message', handleProposal);
+        }
+        
+        if(data.error){
+          alert('Trade Hatası: ' + data.error.message);
+          derivWS.removeEventListener('message', handleProposal);
         }
       };
       
-      derivWS.addEventListener('message', proposalListener);
+      derivWS.addEventListener('message', handleProposal);
     }
 
     function drawTradeChart(){
@@ -1391,9 +1812,17 @@
       startCooldown=0;
       startGlobalSpan=null;
       xzTickCounter=0;
+      
+      // Trend verilerini sıfırla
+      currentTrendData = { direction: null, last3: [], colors: [] };
+      lastTrendSignal = null;
+      trendStartGlobal = null; // YENİ: Trend başlangıcını sıfırla
+      showTrendSignal(null);
+      
       renderTwoRowGrid();
       renderStartOverlay();
       renderXYArea();
+      drawTrendAngle();
       if(isRunning) startWS();
     }
 
@@ -1634,6 +2063,10 @@
       detectStartGlobal();
       renderTwoRowGrid();
       renderStartOverlay();
+      
+      // Trend kontrolü
+      checkAndSignalTrend();
+      
       setTimeout(renderStartOverlay, 0);
     }
 
@@ -1652,6 +2085,12 @@
       if(cond1 || cond2){
         startGlobalSpan = { from: firstGlobal + (n-3), to: firstGlobal + (n-1) };
         startCooldown = 6;
+        
+        // YENİ: Her START yeni trend başlangıcı
+        trendStartGlobal = firstGlobal + (n-1);
+        lastTrendSignal = null;
+        showTrendSignal(null);
+        currentTrendData = { direction: null, last3: [], colors: [] };
       }
     }
 
@@ -1743,36 +2182,64 @@
         const d=JSON.parse(msg.data);
         if(d.history){
           d.history.prices.forEach(p=>{
+            const priceStr = String(p);
             const price=parseFloat(p);
             prices.push(price);
-            const lastTwo=Math.floor(price).toString().slice(-2);
+            
+            const parts = priceStr.split('.');
+            const intPart = parts[0];
+            let decPart = parts[1] || '0';
+            
+            if(decPart.length === 1) decPart = decPart + '0';
+            
+            const lastTwo=intPart.slice(-2);
             digits.push(lastTwo);
-            const priceStr=price.toString();
-            const dec=(priceStr.split('.')[1]||'0');
-            decimalDigits.push(dec.slice(-1));
+            
+            const lastDec = decPart.charAt(decPart.length - 1) || '0';
+            decimalDigits.push(lastDec);
             xzTickCounter++;
-            const lastInt=Math.floor(price).toString().slice(-1);
-            const firstDec=dec.charAt(0)||'0';
+            
+            const lastInt=intPart.slice(-1);
+            const firstDec=decPart.charAt(0)||'0';
             combinedDigits.push(lastInt+','+firstDec);
             updateWorm();
           });
         }
         if(d.tick){
+          const priceStr = d.tick.quote.toString();
           const price=parseFloat(d.tick.quote);
           prices.push(price); if(prices.length>20) prices.shift();
-          const lastTwo=Math.floor(price).toString().slice(-2);
+          
+          const parts = priceStr.split('.');
+          const intPart = parts[0];
+          let decPart = parts[1] || '0';
+          
+          if(decPart.length === 1) decPart = decPart + '0';
+          
+          const lastTwo=intPart.slice(-2);
           digits.push(lastTwo); if(digits.length>20) digits.shift();
-          const priceStr=d.tick.quote.toString();
-          const dec=(priceStr.split('.')[1]||'0');
-          decimalDigits.push(dec.slice(-1)); if(decimalDigits.length>20) decimalDigits.shift();
+          
+          const lastDec = decPart.charAt(decPart.length - 1) || '0';
+          decimalDigits.push(lastDec); if(decimalDigits.length>20) decimalDigits.shift();
           xzTickCounter++;
-          const lastInt=Math.floor(price).toString().slice(-1);
-          const firstDec=dec.charAt(0)||'0';
+          
+          const lastInt=intPart.slice(-1);
+          const firstDec=decPart.charAt(0)||'0';
           combinedDigits.push(lastInt+','+firstDec);
           if(combinedDigits.length>20) combinedDigits.shift();
           updateWorm();
+          
           const priceEl=document.getElementById('price');
-          priceEl.innerText=price.toFixed(2).replace('.',',');
+          
+          let displayPrice = intPart;
+          if(decPart && decPart !== '00'){
+            displayPrice = intPart + ',' + decPart;
+          } else {
+            displayPrice = intPart + ',00';
+          }
+          
+          priceEl.innerText = displayPrice;
+          
           if(prices.length>1){
             const prev=prices[prices.length-2];
             if(price>prev) priceEl.style.background='blue';
@@ -1814,6 +2281,7 @@
           renderWormLines('numbersTop',wormLinesTop.slice(-11));
           renderXYArea();
           renderStartOverlay();
+          drawTrendAngle();
         },40);
       };
     }
@@ -1832,11 +2300,25 @@
     loadSavedToken();
     updateLogos();
     
+    document.body.addEventListener('click', function initAudioOnce() {
+      initAudio();
+      if (audioContext && audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
+    }, { once: true });
+    
+    document.body.addEventListener('touchstart', function() {
+      if (audioContext && audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
+    }, { passive: true });
+    
     window.addEventListener('resize',()=>{
       setTimeout(()=>{
         renderXYArea();
         renderStartOverlay();
         renderTwoRowGrid();
+        drawTrendAngle();
       },100);
     });
   </script>
